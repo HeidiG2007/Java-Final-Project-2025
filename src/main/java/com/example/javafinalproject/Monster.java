@@ -2,25 +2,25 @@ package com.example.javafinalproject;
 
 public class Monster {
 
-    //Initialize Monster variables
+    // assign Monster variables
     private double hitPoints;
     private final double strength;
     private final double dexterity;
     private final double intelligence;
 
+    // Constructor
     public Monster() {
-        //Make an instance of die to use in Monster
+        // make a new die for use in Monster
         Die die = new Die();
 
-        //Roll for health, strength, dexterity, and intelligence
+        // Roll for health, strength, dexterity, and intelligence
         hitPoints = die.rollDie(6, 1);
-        strength = 2 * die.rollDie(6,1);
+        strength = 2 * die.rollDie(6, 1);
         dexterity = 2 * die.rollDie(6, 1);
         intelligence = 2 * die.rollDie(6, 1);
     }
 
-    //getters
-
+    // Getters
     public double getHitPoints() {
         return hitPoints;
     }
@@ -37,4 +37,11 @@ public class Monster {
         return intelligence;
     }
 
+    // method to allow user to subtract hit points
+    public void subtractHitPoints(double amount) {
+        hitPoints -= amount;
+        if (hitPoints < 0) {
+            hitPoints = 0;
+        }
+    }
 }

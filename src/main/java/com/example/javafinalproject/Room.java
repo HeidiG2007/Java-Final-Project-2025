@@ -50,4 +50,14 @@ public class Room {
     public void setVisited(boolean visited) {
         this.visited = visited;
     }
+
+    // generate the setters based off of the UML
+
+    public void setGold(int gold) {
+        this.gold = gold;
+    }
+
+    public void setMonster(boolean monster) {
+        this.monster = monster;
+    }
 }
