@@ -175,20 +175,28 @@ public class HelloController {
             //Update label info
             updatePlayerStatLabels();
 
-        } else if (actionEvent.getSource()==searchButton) {
-            int hidingSpot =die.rollDie(20,1);
-            if (hidingSpot < gamePlayer.getIntelligence()&&!currentRoom.hasMonster() )
-            { textArea.appendText("you found " + currentRoom.getGold()+" Gold\n");
-                gamePlayer.addGold(currentRoom.getGold());
-                currentRoom.setGold(0);
-                updatePlayerStatLabels();
-        }
-            else if (currentRoom.hasMonster()){
-                textArea.appendText("defeat monster before searching for gold\n");
+        } else if (actionEvent.getSource() == searchButton) {
+            //Roll for quality of hiding spot
+            int hidingSpot = die.rollDie(20, 1);
 
-            }
-            else textArea.appendText("you found no gold sorry\n");
-    }
+            //If the player finds the gold and there's no monster in the room
+            if (hidingSpot < gamePlayer.getIntelligence() && !currentRoom.hasMonster()) {
+                //Then we tell them they got the gold
+                textArea.appendText("You found " + currentRoom.getGold() + " Gold!\n");
+                //And we give them the gold
+                gamePlayer.addGold(currentRoom.getGold());
+                //Which means the room has no more gold to give
+                currentRoom.setGold(0);
+                //And we update their inventory info
+                updatePlayerStatLabels();
+
+                //If there's a monster, we tell them to defeat the monster before collecting
+            } else if (currentRoom.hasMonster()) {
+                textArea.appendText("Defeat monster before searching for gold!\n");
+
+                //If they player doesn't find anything, tell them they found nothing.
+            } else textArea.appendText("You found no gold, sorry!\n");
+        }
 
     }
 
@@ -213,6 +221,7 @@ public class HelloController {
         //Log the current room as visited
         currentRoom.setVisited(true);
 
+        //Tell the user the map key
         StringBuilder visitedMap = new StringBuilder("""
                 Hello! This is a map of the dungeon. Key:
                     B: Blocked.
@@ -221,22 +230,28 @@ public class HelloController {
                     U: Unvisited
                 """);
 
-        //We put a room in every spot in the roomsArray
+        //Traverse the roomsArray and add characters to the StringBuilder according to the state of the room
         for (int i = 0; i < roomsArray.length; i++) {
             for (int j = 0; j < roomsArray[i].length; j++) {
+
+                //If it's our current location, put an O
                 if (roomsArray[j][i] == currentRoom) {
                     visitedMap.append("O");
+                    //If it's been visited, put an X
                 } else if (roomsArray[j][i].isVisited() && !roomsArray[j][i].isBlocked()) {
                     visitedMap.append("X");
+                    //If it's blocked, put a B
                 } else if (roomsArray[j][i].isBlocked()) {
                     visitedMap.append("B");
+                    //Otherwise, it's unvisited. Put a U
                 } else {
                     visitedMap.append("U");
                 }
             }
+            //Add a new line so we start the next row
             visitedMap.append("\n");
         }
-
+        //Print the stringBuilder to the mapText area
         mapText.setText(visitedMap.toString());
 
     }
