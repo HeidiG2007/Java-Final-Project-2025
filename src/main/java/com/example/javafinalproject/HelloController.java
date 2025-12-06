@@ -175,7 +175,20 @@ public class HelloController {
             //Update label info
             updatePlayerStatLabels();
 
+        } else if (actionEvent.getSource()==searchButton) {
+            int hidingSpot =die.rollDie(20,1);
+            if (hidingSpot < gamePlayer.getIntelligence()&&!currentRoom.hasMonster() )
+            { textArea.appendText("you found " + currentRoom.getGold()+" Gold\n");
+                gamePlayer.addGold(currentRoom.getGold());
+                currentRoom.setGold(0);
+                updatePlayerStatLabels();
         }
+            else if (currentRoom.hasMonster()){
+                textArea.appendText("defeat monster before searching for gold\n");
+
+            }
+            else textArea.appendText("you found no gold sorry\n");
+    }
 
     }
 
