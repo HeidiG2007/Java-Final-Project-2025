@@ -196,6 +196,88 @@ public class HelloController {
 
                 //If they player doesn't find anything, tell them they found nothing.
             } else textArea.appendText("You found no gold, sorry!\n");
+        } else if (actionEvent.getSource() == attackButton){
+            if (currentRoom.hasMonster()){
+                // The initial attack of the player, based on the player's intelligence
+                boolean canSeeMonster = gamePlayer.rollDie(20,1) < gamePlayer.getIntelligence();
+                // First strike by player
+                if (canSeeMonster){
+                    double damageDealt = gamePlayer.getStrength()/3;
+                    currentMonster.subtractHitPoints(damageDealt);
+                    updatePlayerStatLabels();
+                }
+
+                boolean monsterTurn = true;
+                // The fight between the monster and player
+                // Depending on the turn, each opponent attacks the other with their strength divided by 3
+                // Before allowing the other opponent to attack
+                while (currentMonster.getHitPoints() > 0 && gamePlayer.getHitPoints() > 0){
+                    if (monsterTurn){
+                        double damageDealt = currentMonster.getStrength()/3;
+                        if (damageDealt < 1){
+                            damageDealt = 1;
+                        }
+                        gamePlayer.subtractHitPoints(damageDealt);
+                        updatePlayerStatLabels();
+                        monsterTurn = false;
+                    } else {
+                        double damageDealt = gamePlayer.getStrength() / 3;
+                        currentMonster.subtractHitPoints(damageDealt);
+                        updatePlayerStatLabels();
+                        monsterTurn = true;
+                    }
+                }
+                // If the monster dies, remove the monster from that level, and update the labels
+                // If the player dies, end the game
+                if (currentMonster.getHitPoints() <= 0){
+                    currentRoom.setMonster(false);
+                    updatePlayerStatLabels();
+                } else {
+                    endGame();
+                }
+            } else {
+                // If there is no monster in the room, alert the player
+                textArea.appendText("You can't fight, there is no monster!\n");
+            }
+        } else if (actionEvent.getSource() == runButton){
+            // If the room has a monster, allow the player to run
+            if (currentRoom.hasMonster()){
+                // Based on monster's intelligence decided if monster saw player or not
+                // If they did see the player, cause them damage
+                boolean seenByMonster = gamePlayer.rollDie(20,1) < currentMonster.getIntelligence();
+                if (seenByMonster){
+                    double damageDealt = currentMonster.getStrength()/3;
+                    if (damageDealt < 1){
+                        damageDealt = 1;
+                    }
+                    gamePlayer.subtractHitPoints(damageDealt);
+                    if (gamePlayer.getHitPoints() <= 0) {
+                        endGame();
+                    }
+                }
+                // Inform the player they are running
+                playerIsRunning = true;
+                textArea.appendText("Your running! Choose a direction!\n");
+            } else {
+                // If room has no monster, tell player they can't run
+                textArea.appendText("You can't run, there is no monster to run from!\n");
+            }
+        } else if (actionEvent.getSource() == sleepButton){
+            // Only allowed to sleep in a room if not in a room with a monster
+            // has one in six chance of spawning a monster as you sleep
+            // resets the player's hitpoints as well
+            if (!currentRoom.hasMonster()) {
+                gamePlayer.resetHitPoints();
+                boolean foundByMonster = gamePlayer.rollDie(6,1) == 1;
+                if (foundByMonster){
+                    currentRoom.setMonster(true);
+                    currentMonster = new Monster();
+                }
+                updatePlayerStatLabels();
+
+            } else {
+                textArea.appendText("You can't sleep! There is a monster nearby!\n");
+            }
         }
 
     }
