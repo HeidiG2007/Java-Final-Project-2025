@@ -269,7 +269,7 @@ public class HelloController {
                 playerIsRunning = false;
             }
 
-            //Update teh info about the player and possibly a monster in the next room which is now our current room
+            //Update the info about the player and possibly a monster in the next room which is now our current room
             updatePlayerStatLabels();
 
             //Otherwise if they went left...
@@ -434,16 +434,26 @@ public class HelloController {
         if (currentRoom.hasMonster()) {
 
             //Update the label with the monster's stats
-            monsterStatLabel.setText("Monster Stats:" + "\nHit points: " + currentMonster.getHitPoints() + "\nStrength: " + currentMonster.getStrength() + "\nDexterity: " + currentMonster.getDexterity() + "\nIntelligence: " + currentMonster.getIntelligence());
+            monsterStatLabel.setText("Monster Stats:" +
+                    "\nHit points: " + currentMonster.getHitPoints() +
+                    "\nStrength: " + currentMonster.getStrength() +
+                    "\nDexterity: " + currentMonster.getDexterity() +
+                    "\nIntelligence: " + currentMonster.getIntelligence());
 
             //Otherwise
         } else {
             //Tell the user there's no monster in the room
-            monsterStatLabel.setText("Monster Stats: \nNo Monster.");
+            monsterStatLabel.setText("Monster Stats: " +
+                    "\nNo Monster.");
         }
 
         //Update the player's stats
-        playerStatLabel.setText("Player Stats:" + "\nHit points: " + gamePlayer.getHitPoints() + "\nStrength: " + gamePlayer.getStrength() + "\nDexterity: " + gamePlayer.getDexterity() + "\nIntelligence: " + gamePlayer.getIntelligence() + "\nTotal Gold: " + gamePlayer.getTotalGold());
+        playerStatLabel.setText("Player Stats:" +
+                "\nHit points: " + gamePlayer.getHitPoints() +
+                "\nStrength: " + gamePlayer.getStrength() +
+                "\nDexterity: " + gamePlayer.getDexterity() +
+                "\nIntelligence: " + gamePlayer.getIntelligence() +
+                "\nTotal Gold: " + gamePlayer.getTotalGold());
 
         //Log the current room as visited
         currentRoom.setVisited(true);
