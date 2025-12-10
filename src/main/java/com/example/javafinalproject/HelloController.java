@@ -344,7 +344,7 @@ public class HelloController {
         } else if (actionEvent.getSource() == attackButton){
             if (currentRoom.hasMonster()){
                 // The initial attack of the player, based on the player's intelligence
-                boolean canSeeMonster = gamePlayer.rollDie(20,1) < gamePlayer.getIntelligence();
+                boolean canSeeMonster = die.rollDie(20,1) < gamePlayer.getIntelligence();
                 // First strike by player
                 if (canSeeMonster){
                     double damageDealt = gamePlayer.getStrength()/3;
@@ -389,7 +389,7 @@ public class HelloController {
             if (currentRoom.hasMonster()){
                 // Based on monster's intelligence decided if monster saw player or not
                 // If they did see the player, cause them damage
-                boolean seenByMonster = gamePlayer.rollDie(20,1) < currentMonster.getIntelligence();
+                boolean seenByMonster = die.rollDie(20,1) < currentMonster.getIntelligence();
                 if (seenByMonster){
                     double damageDealt = currentMonster.getStrength()/3;
                     if (damageDealt < 1){
@@ -413,7 +413,7 @@ public class HelloController {
             // resets the player's hitpoints as well
             if (!currentRoom.hasMonster()) {
                 gamePlayer.resetHitPoints();
-                boolean foundByMonster = gamePlayer.rollDie(6,1) == 1;
+                boolean foundByMonster = die.rollDie(6,1) == 1;
                 if (foundByMonster){
                     currentRoom.setMonster(true);
                     currentMonster = new Monster();

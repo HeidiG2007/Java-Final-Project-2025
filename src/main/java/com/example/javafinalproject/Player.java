@@ -16,7 +16,7 @@ public class Player {
         // create a new die to use for player
         Die die = new Die();
 
-        // Roll die for strength, dexterity, and intelligence using rollDie method
+        // Roll die for strength, dexterity, and intelligence using rollDie class
         strength = die.rollDie(6, 3);
         dexterity = die.rollDie(6, 3);
         intelligence = die.rollDie(6, 3);
@@ -60,17 +60,9 @@ public class Player {
         }
     }
 
-    // allows you to reset the hit points and roll the die again
-
+    // allows you to reset the hit points
     public void resetHitPoints() {
         hitPoints = 20; // Since initial HP is always 20
     }
 
-    public int rollDie(int sides, int numTimes) {
-        int total = 0;
-        for (int i = 0; i < numTimes; i++) {
-            total += (int)(Math.random() * sides) + 1;
-        }
-        return total;
-    }
 }
