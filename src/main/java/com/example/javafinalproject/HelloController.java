@@ -1,3 +1,148 @@
+/*
+Start
+Create a 10 X 10 (or should I say [10] [10]) 2D Array of type Room named roomsArray.
+Traverse roomsArray, passing in the rooms’ locations in the grid as their x and y locations in the parameter. (This should create a grid of 100 rooms, with the upper left being index [0] [0] and the bottom right [9] [9] with matching x and y positions initialized in their respective Rooms.)
+Room currentRoom = roomsArray[0][0]. We start in the upper left corner.
+boolean playerIsRunning = false
+Create a Player named gamePlayer
+Create a Monster named currentMonster;
+updatePlayerStatLabels();
+When the rightButton is clicked:
+playerXLocation = currentRoom.getLocation(0)
+playerYLocation = currentRoom.getLocation(1)
+If currentRoom.isMonsterThere()
+	currentMonster = new Monster;
+If playerIsRunning is false:
+Write to the textScreen that the player is in the room with a monster. They can either fight or run.
+If the playerXLocation is 9 or if the room to the right of the player (playerXLocation + 1) is blocked:
+write to the textScreen that the player can’t go right.
+Otherwise:
+Set currentRoom to roomsArray[playerXLocation+1] [playerYLocation]
+Set playerIsRunning to false
+When the leftButton is clicked
+playerXLocation = currentRoom.getLocation(0)
+playerYLocation = currentRoom.getLocation(1)
+If currentRoom.isMonsterThere()
+	currentMonster = new Monster;
+If playerIsRunning is false:
+Write to the textScreen that the player is in the room with a monster. They can either fight or run.
+If the playerXLocation is 0 or if the room to the left of the player (playerXLocation - 1) is blocked:
+write to the textScreen that the player can’t go left.
+Otherwise:
+Set currentRoom to roomsArray[playerXLocation - 1] [playerYLocation]
+Set playerIsRunning to false
+When the downButton is clicked
+playerXLocation = currentRoom.getLocation(0)
+playerYLocation = currentRoom.getLocation(1)
+If currentRoom.isMonsterThere()
+	currentMonster = new Monster;
+If playerIsRunning is false:
+Write to the textScreen that the player is in the room with a monster. They can either fight or run.
+If the playerYLocation is 9 or if the room below the player (playerYLocation + 1) is blocked:
+write to the textScreen that the player can’t go down.
+Otherwise:
+Set currentRoom to roomsArray[playerXLocation] [playerYLocation + 1]
+Set playerIsRunning to false
+When the upButton is clicked
+playerXLocation = currentRoom.getLocation(0)
+playerYLocation = currentRoom.getLocation(1)
+If currentRoom.isMonsterThere()
+	currentMonster = new Monster;
+If playerIsRunning is false:
+Write to the textScreen that the player is in the room with a monster. They can either fight or run.
+If the playerYLocation is 0 or if the room below the player (playerYLocation - 1) is blocked:
+write to the textScreen that the player can’t go up.
+Otherwise:
+Set currentRoom to roomsArray[playerXLocation] [playerYLocation - 1]
+Set playerIsRunning to false
+When the fight button is clicked
+if currentRoom.getMonster
+boolean youSeeMonster = rollDie(20, 1) < player’s intelligence
+If youSeeMonster:
+	Double damage = gamePlayer’s strength/3
+currentMonster.subtractHitPoints(damage)
+updatePlayerStatLabels()
+Boolean monsterTurn = true;
+while monster.getHitPoints > 0 and gamePlayer.getHitPoints > 0
+	if monsterTurn
+		double damage = monster’s strength/3
+		if damage < 1
+				damage = 1
+			gamePlayer.subtractHitPoints(damage)
+			updatePlayerStatLabels()
+			monsterTurn = false
+		else
+			Double damage = gamePlayer’s strength/3
+currentMonster.subtractHitPoints(damage)
+updatePlayerStatLabels()
+Boolean monsterTurn = true;
+If currentMonster’s HP is <= 0
+	currentRoom.setMonster(false)
+		updatePlayerStatLabels()
+else
+		endGame()
+else
+	Set text to You can’t fight a monster - There’s none here.
+
+When the run button is clicked
+if currentRoom.getMonster()
+boolean monsterSawYou = rollDie(20, 1) < monster’s intelligence
+If monsterSawYou:
+	double damage = monster’s strength/3
+	if damage < 1
+		damage = 1
+	gamePlayer.subtractHitPoints(damage)
+if hero’s hitPoints <= 0
+endGame()
+Set playerIsRunning to true
+Write to the textScreen that the user can choose a direction to run
+Else
+	Set text to You can’t run from a monster - There’s none here.
+
+When the searchRoom button is clicked
+hidingSpot = rollDie(20, 1)
+if hidingSpot < gameplayer’s intelligence and there’s no monster in the current room
+Write to the textScreen “You found “ + currentRoom.getGold() + “ gold!”
+Add currentRoom.getGold() to gameplayer’s gold
+Set currentRoom’s gold to 0
+updatePlayerStatLabels()
+else if currentRoom.getMonster()
+	Write to the textScreen you have to defeat the monster before searching the room.
+else
+	Write to the textScreen you found no gold
+
+When the sleep button is clicked
+If currentRoom doesn’t have a monster
+gamePlayer.resetHitPoints()
+boolean monsterFoundYou = rollDie(6, 1) == 1
+if monsterFoundYou
+		currentRoom.setMonster(true)
+		currentMonster = new Monster()
+	updatePlayerStatLabels()
+Else
+Write to the textScreen saying that you can’t sleep because a monster’s in the room.
+
+EndGame function:
+upButton.setDisable(true);
+downButton.setDisable(true);
+leftButton.setDisable(true);
+rightButton.setDisable(true);
+fightButton.setDisable(true);
+runButton.setDisable(true);
+searchButton.setDisable(true);
+sleepButton.setDisable(true);
+Write to textScreen saying that the game’s over.
+
+updatePlayerStatLabels function:
+Write to playerStats label with hit points, strength, dexterity, intelligence, total gold.
+Traverse the 2d array and update the map text to reflect the map status
+if (currentRoom.hasMonster)
+Write to monsterStats label with hit points, strength, dexterity, intelligence.
+else
+	Write to monsterStats label “No monster found in this room”
+
+ */
+
 package com.example.javafinalproject;
 
 import javafx.event.ActionEvent;
